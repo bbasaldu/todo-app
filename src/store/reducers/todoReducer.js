@@ -20,6 +20,17 @@ export default function todoReducer(state = initalState, action){
                 todoItems: todoCopy.filter(todoItem => todoItem.id !== id)
             }
         }
+        case EDIT_TODO: {
+            const {content, id} = action.payload
+            const todoCopy = [...state.todoItems]
+            const oldItemIndex = todoCopy.findIndex(todoItem => todoItem.id === id)
+            const updatedItem = {id, content}
+            todoCopy.splice(oldItemIndex, 1, updatedItem)
+            return {
+                ...state,
+                todoItems: todoCopy
+            }
+        }
         default: {
             return state
         }
