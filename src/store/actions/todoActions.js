@@ -8,3 +8,7 @@ export const addTodo = content => ({
         content
     }
 })
+export const removeTodo = id => ({
+    type: REMOVE_TODO,
+    payload: id
+})
