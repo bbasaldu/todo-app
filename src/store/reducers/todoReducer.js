@@ -2,6 +2,11 @@ import { ADD_TODO, REMOVE_TODO, EDIT_TODO } from "../actionTypes/todoActionTypes
 const initalState = {
     todoItems: []
 }
+const testState = {
+    todoItems: [
+        {userId: 1, items: []}
+    ]
+}
 export default function todoReducer(state = initalState, action){
     switch (action.type) {
         case ADD_TODO: {
