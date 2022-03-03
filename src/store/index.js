@@ -1,3 +1,7 @@
-import { createStore } from "@reduxjs/toolkit";
-import rootReducer from './reducers'
-export default createStore(rootReducer)
+import { configureStore } from '@reduxjs/toolkit'
+import todoReducer from './reducers/todoReducer'
+export default configureStore({
+    reducer: {
+        todoItemState: todoReducer
+    }
+})

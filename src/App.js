@@ -1,9 +1,6 @@
-import './App.css';
-
+import UserTodos from "./components/UserTodos";
 function App() {
-  return (
-    null
-  );
+  return <UserTodos />;
 }
 
 export default App;
