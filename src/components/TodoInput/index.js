@@ -1,15 +1,16 @@
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "../../store/actions/todoActions";
 import cls from './TodoInput.module.css'
 const TodoInput = () => {
+  const currentUser = useSelector(state => state.userState.currentUser)
   const inputRef = useRef();
   const dispatch = useDispatch();
   const handleSubmit = (ev) => {
     ev.preventDefault();
     const userInput = inputRef.current.value;
     if (userInput.length > 0) {
-      dispatch(addTodo(userInput));
+      dispatch(addTodo(currentUser.id, userInput) );
       inputRef.current.value = "";
     }
   };

@@ -1,9 +1,10 @@
-import { ADD_TODO, REMOVE_TODO, EDIT_TODO } from "../actionTypes/todoActionTypes";
+import { ADD_TODO, REMOVE_TODO, EDIT_TODO, GET_TODOS } from "../actionTypes/todoActionTypes";
 let nextTodoId = 0;
 
-export const addTodo = content => ({
+export const addTodo = (userId, content) => ({
     type: ADD_TODO,
     payload: {
+        userId,
         id: ++nextTodoId,
         content
     }
@@ -19,4 +20,8 @@ export const editTodo = (id, content) => ({
         id,
         content
     }
+})
+export const getTodos = (userId) => ({
+    type: GET_TODOS,
+    payload: userId
 })
