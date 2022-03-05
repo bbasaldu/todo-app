@@ -1,9 +1,36 @@
-import { configureStore } from '@reduxjs/toolkit'
-import todoReducer from './reducers/todoReducer'
-import userReducer from './reducers/userReducer'
-export default configureStore({
-    reducer: {
-        todoItemState: todoReducer,
-        userState: userReducer
-    }
-})
+import { createStore } from '@reduxjs/toolkit'
+import rootReducer from './reducers'
+export default createStore(rootReducer)
+/*
+flux pattern with
+normalized data schema
+users: {
+    byId: {
+        u1: {
+            name: user1,
+            todos: [t1,t3,t5]
+        },
+        u2: {
+            name: user2,
+            todos: [t2,t4,t6]
+        }
+    },
+    allIds: [u1, u2]
+},
+todos: {
+    byId: {
+        t1: {
+            userId: u1,
+            content: 'todo 1'
+        },
+        t2: {
+            userId: u2,
+            content: 'todo 2'
+        },
+        ....
+        t6: 
+
+    },
+    allIds: [t1,t2,...,t6]
+}
+*/

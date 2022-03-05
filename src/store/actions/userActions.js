@@ -2,16 +2,16 @@ import {SET_CURR_USER, ADD_USER, REMOVE_USER, EDIT_USER} from '../actionTypes/us
 let nextUserId = 0
 
 
-export const setCurrentUser = (id) => ({
+export const setCurrentUser = (userId) => ({
     type: SET_CURR_USER,
-    payload: id
+    payload: userId
 })
 
-export const addUser = username => ({
+export const addUser = name => ({
     type: ADD_USER,
     payload: {
-        id: ++nextUserId,
-        username
+        userId: ++nextUserId,
+        name
     }
 })
 

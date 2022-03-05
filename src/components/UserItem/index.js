@@ -2,8 +2,9 @@ import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {removeUser, editUser} from '../../store/actions/userActions'
 import cls from "./UserItem.module.css";
-const UserItem = (props) => {
-  const currentUser = useSelector((state) => state.userState.currentUser);
+const UserItem = () => {
+  const currentUser = useSelector((state) => state.users.byId.currentUser);
+  
   const dispatch = useDispatch()
   const [editMode, setEditMode] = useState(false);
   const editInputRef = useRef();
@@ -14,7 +15,7 @@ const UserItem = (props) => {
     ev.preventDefault();
     const newContent = editInputRef.current.value;
     if (newContent.length > 0) {
-      dispatch(editUser(currentUser.id, newContent));
+      dispatch(editUser(currentUser.userId, newContent));
     }
     setEditMode(false);
   }
@@ -22,18 +23,18 @@ const UserItem = (props) => {
     <div>
       {currentUser && (
         <div className={cls.item}>
-          {!editMode && <span>{currentUser.username}</span>}
+          {!editMode && <span>{currentUser.name}</span>}
           {editMode && (
             <span>
               <form onSubmit={editCurrentUser}>
-                <input ref={editInputRef} type="text" defaultValue={currentUser.username} />
+                <input ref={editInputRef} type="text" defaultValue={currentUser.name} />
                 <button type="submit">Submit</button>
               </form>
             </span>
           )}
 
           <span>
-            <span>{`id: ${currentUser.id}`}</span>
+            <span>{`id: ${currentUser.userId}`}</span>
             <button onClick={() => setEditMode(true)}>Edit</button>
             <button onClick={removeUserItem}>Remove</button>
           </span>
