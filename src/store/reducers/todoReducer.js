@@ -5,6 +5,9 @@ import {
   EDIT_TODO,
   GET_TODOS
 } from "../actionTypes/todoActionTypes";
+import {
+  REMOVE_USER
+} from "../actionTypes/userActionTypes"
 // const initalState = {
 //   todoItems: [],
 // };
@@ -68,6 +71,15 @@ import {
 // }
 function todosById(state = {}, action){
   switch(action.type){
+    //user actions
+    case REMOVE_USER: {
+      const {userId} = action.payload
+      
+
+      return
+    }
+
+    //todo actions
     case ADD_TODO: {
       const {userId, id, content} = action.payload
       return {

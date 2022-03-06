@@ -34,3 +34,16 @@ todos: {
     allIds: [t1,t2,...,t6]
 }
 */
+
+
+/*
+data: {
+    users: [
+        {username: 'user1', id: 1, todos: [
+            {id: 1, content: 'todo1'},
+            ...
+        ]}
+        ...
+    ]
+}
+*/

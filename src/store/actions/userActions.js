@@ -15,9 +15,9 @@ export const addUser = name => ({
     }
 })
 
-export const removeUser = id => ({
+export const removeUser = userId => ({
     type: REMOVE_USER,
-    payload: id
+    payload: userId
 })
 
 export const editUser = (id, username) => ({
