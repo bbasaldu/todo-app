@@ -26,10 +26,10 @@ export const removeUser = (currentUser) => ({
   }
 });
 
-export const editUser = (id, username) => ({
+export const editUser = (userId, name) => ({
   type: EDIT_USER,
   payload: {
-    id,
-    username,
+    userId,
+    name,
   },
 });

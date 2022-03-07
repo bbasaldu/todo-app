@@ -68,7 +68,13 @@ import {REMOVE, modify} from '../utility'
 //       return state;
 //   }
 // }
-
+//currentUser = state => state.users.currentUser
+//users = state => state.users.byId
+/*
+  selectCurrentUser = (currentUser ,users) => {
+    return users[currentUser]
+  }
+*/
 
 function usersById(state = { currentUser: null }, action) {
   switch (action.type) {
@@ -100,6 +106,11 @@ function usersById(state = { currentUser: null }, action) {
       const {userId} = action.payload;
       const result = modify(REMOVE, Object, state, [userId]);
       return { ...result, currentUser: null };
+    }
+    case EDIT_USER: {
+      const {userId, name} = action.payload
+      
+      return
     }
     //todo actions
     case ADD_TODO: {

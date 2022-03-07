@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {removeUser, editUser} from '../../store/actions/userActions'
 import cls from "./UserItem.module.css";
