@@ -76,20 +76,21 @@ import {REMOVE, modify} from '../utility'
   }
 */
 
-function usersById(state = { currentUser: null }, action) {
+function usersById(state = { }, action) {
   switch (action.type) {
     //user actions
 
     //might move this, I feel like it should be seperate somehow
     //in userActions.js setCurrUser(payload: {userId, name})
     //since userItem only edits that
-    case SET_CURR_USER: {
-      const userId = action.payload;
-      return {
-        ...state,
-        currentUser: userId !== null ? { ...state[userId], userId } : null,
-      };
-    }
+
+    // case SET_CURR_USER: {
+    //   const userId = action.payload;
+    //   return {
+    //     ...state,
+    //     currentUser: userId !== null ? { ...state[userId], userId } : null,
+    //   };
+    // }
 
     case ADD_USER: {
       const { userId, name } = action.payload;
@@ -105,7 +106,7 @@ function usersById(state = { currentUser: null }, action) {
     case REMOVE_USER: {
       const {userId} = action.payload;
       const result = modify(REMOVE, Object, state, [userId]);
-      return { ...result, currentUser: null };
+      return result
     }
     case EDIT_USER: {
       const {userId, name} = action.payload
@@ -122,11 +123,6 @@ function usersById(state = { currentUser: null }, action) {
           ...currentUserState,
           todos: [...currentUserState.todos, id],
         },
-        currentUser: {
-          ...currentUserState,
-          todos: [...currentUserState.todos, id],
-          userId
-        }
       };
     }
     default:
@@ -149,8 +145,21 @@ function allUsers(state = [], action) {
       return state;
   }
 }
-
+function currentUser(state = null, action){
+  switch(action.type){
+    case SET_CURR_USER: {
+      const userId = action.payload
+      return userId
+    }
+    case REMOVE_USER: {
+      return null
+    }
+    default:
+      return state
+  }
+}
 const userReducer = combineReducers({
+  currentUser,
   byId: usersById,
   allIds: allUsers,
 });

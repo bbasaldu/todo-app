@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectCurrentUserTodos } from "../../store/selectors/todoSelectors";
+import { selectCurrentUserTodos } from "../../store/selectors";
 import TodoItem from "../TodoItem";
 import cls from "./TodoList.module.css";
 const TodoList = () => {

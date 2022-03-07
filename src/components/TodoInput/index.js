@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "../../store/actions/todoActions";
 import cls from './TodoInput.module.css'
 const TodoInput = () => {
-  const currentUserId = useSelector(state => state.users.byId.currentUser.userId)
+  const currentUserId = useSelector(state => state.users.currentUser)
   const inputRef = useRef();
   const dispatch = useDispatch();
   const handleSubmit = (ev) => {
