@@ -6,6 +6,8 @@ import {
 } from "../actionTypes/userActionTypes";
 import { ADD_TODO } from "../actionTypes/todoActionTypes";
 import { combineReducers } from "@reduxjs/toolkit";
+import {REMOVE, modify} from '../utility'
+
 // const initalState = {
 //   currentUser: null,
 //   usersById: [],
@@ -68,19 +70,19 @@ import { combineReducers } from "@reduxjs/toolkit";
 // }
 
 
-function usersById(state = {currentUser: null}, action) {
+function usersById(state = { currentUser: null }, action) {
   switch (action.type) {
     //user actions
-    
+
     //might move this, I feel like it should be seperate somehow
     //in userActions.js setCurrUser(payload: {userId, name})
     //since userItem only edits that
     case SET_CURR_USER: {
-      const userId = action.payload
+      const userId = action.payload;
       return {
         ...state,
-        currentUser: userId!==null?{...state[userId], userId}:null
-      }
+        currentUser: userId !== null ? { ...state[userId], userId } : null,
+      };
     }
 
     case ADD_USER: {
@@ -89,21 +91,32 @@ function usersById(state = {currentUser: null}, action) {
         ...state,
         [userId]: {
           name,
-          todos: []
-        }
+          todos: [],
+        },
       };
+    }
+
+    case REMOVE_USER: {
+      const {userId} = action.payload;
+      const result = modify(REMOVE, Object, state, [userId]);
+      return { ...result, currentUser: null };
     }
     //todo actions
     case ADD_TODO: {
-      const {userId, id} = action.payload
-      const currentUser = state[userId]
+      const { userId, id } = action.payload;
+      const currentUserState = state[userId];
       return {
         ...state,
         [userId]: {
-          ...currentUser,
-          todos: [...currentUser.todos, id]
+          ...currentUserState,
+          todos: [...currentUserState.todos, id],
+        },
+        currentUser: {
+          ...currentUserState,
+          todos: [...currentUserState.todos, id],
+          userId
         }
-      }
+      };
     }
     default:
       return state;
@@ -111,13 +124,18 @@ function usersById(state = {currentUser: null}, action) {
 }
 
 function allUsers(state = [], action) {
-  switch(action.type){
+  switch (action.type) {
     case ADD_USER: {
-      const {userId} = action.payload
-      return [...state, userId]
+      const { userId } = action.payload;
+      return [...state, userId];
     }
-    default: 
-      return state
+    case REMOVE_USER: {
+      const {userId} = action.payload
+      const result = modify(REMOVE, Array, state, [userId])
+      return result
+    }
+    default:
+      return state;
   }
 }
 

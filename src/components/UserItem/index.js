@@ -1,15 +1,14 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {removeUser, editUser} from '../../store/actions/userActions'
 import cls from "./UserItem.module.css";
 const UserItem = () => {
   const currentUser = useSelector((state) => state.users.byId.currentUser);
-  
   const dispatch = useDispatch()
   const [editMode, setEditMode] = useState(false);
   const editInputRef = useRef();
   const removeUserItem = () => {
-    dispatch(removeUser(currentUser.id))
+    dispatch(removeUser({...currentUser}))
   }
   const editCurrentUser = (ev) => {
     ev.preventDefault();

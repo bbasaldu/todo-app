@@ -8,6 +8,7 @@ import {
 import {
   REMOVE_USER
 } from "../actionTypes/userActionTypes"
+import { modify, REMOVE } from "../utility";
 // const initalState = {
 //   todoItems: [],
 // };
@@ -73,10 +74,9 @@ function todosById(state = {}, action){
   switch(action.type){
     //user actions
     case REMOVE_USER: {
-      const {userId} = action.payload
+      const {todos} = action.payload
       
-
-      return
+      return modify(REMOVE, Object, state, todos)
     }
 
     //todo actions
@@ -97,6 +97,14 @@ function todosById(state = {}, action){
 
 function allTodos(state=[], action){
   switch(action.type){
+    //user actions
+    case REMOVE_USER: {
+      const {todos} = action.payload
+      const result = modify(REMOVE, Array, state, todos)
+      return result 
+    }
+
+    //todo actions
     case ADD_TODO: {
       const {id} = action.payload
       return [...state, id]

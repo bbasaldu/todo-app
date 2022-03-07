@@ -1,6 +1,12 @@
-import { createStore } from '@reduxjs/toolkit'
+import { applyMiddleware, createStore } from '@reduxjs/toolkit'
 import rootReducer from './reducers'
-export default createStore(rootReducer)
+const logger = store => next => action => {
+    console.log('dispatching', action)
+    let result = next(action)
+    console.log('next state', store.getState())
+    return result
+  }
+export default createStore(rootReducer, applyMiddleware(logger))
 /*
 flux pattern with
 normalized data schema
