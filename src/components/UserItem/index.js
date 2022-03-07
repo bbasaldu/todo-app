@@ -1,16 +1,16 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {removeUser, editUser} from '../../store/actions/userActions'
+import { removeUser, editUser } from "../../store/actions/userActions";
 import { selectCurrentUser } from "../../store/selectors";
 import cls from "./UserItem.module.css";
 const UserItem = () => {
   const currentUser = useSelector(selectCurrentUser);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
   const editInputRef = useRef();
   const removeUserItem = () => {
-    dispatch(removeUser({...currentUser}))
-  }
+    dispatch(removeUser({ ...currentUser }));
+  };
   const editCurrentUser = (ev) => {
     ev.preventDefault();
     const newContent = editInputRef.current.value;
@@ -18,7 +18,7 @@ const UserItem = () => {
       dispatch(editUser(currentUser.userId, newContent));
     }
     setEditMode(false);
-  }
+  };
   return (
     <div>
       {currentUser && (
@@ -27,7 +27,11 @@ const UserItem = () => {
           {editMode && (
             <span>
               <form onSubmit={editCurrentUser}>
-                <input ref={editInputRef} type="text" defaultValue={currentUser.name} />
+                <input
+                  ref={editInputRef}
+                  type="text"
+                  defaultValue={currentUser.name}
+                />
                 <button type="submit">Submit</button>
               </form>
             </span>

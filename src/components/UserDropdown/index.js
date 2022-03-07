@@ -14,7 +14,7 @@ const UserDropDown = () => {
     <select ref={dropDownRef} defaultValue={"-1"} onChange={handleUserChange}>
       <option value="-1">-- select user --</option>
       {Object.keys(users).map((userId) => {
-        if(userId === 'currentUser') return null
+        if (userId === "currentUser") return null;
         const username = users[userId].name;
         return (
           <option key={userId} value={userId}>

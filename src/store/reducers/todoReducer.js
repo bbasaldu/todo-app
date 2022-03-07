@@ -3,119 +3,74 @@ import {
   ADD_TODO,
   REMOVE_TODO,
   EDIT_TODO,
-  GET_TODOS
 } from "../actionTypes/todoActionTypes";
-import {
-  REMOVE_USER
-} from "../actionTypes/userActionTypes"
+import { REMOVE_USER } from "../actionTypes/userActionTypes";
 import { modify, REMOVE } from "../utility";
-// const initalState = {
-//   todoItems: [],
-// };
-// export default function todoReducer(state = initalState, action) {
-//   switch (action.type) {
-//     case ADD_TODO: {
-//       const { userId, id, content } = action.payload;
-//       const todoCopy = [...state.todoItems];
-//       const currentUserIndex = todoCopy.findIndex(
-//         (item) => item.userId === userId
-//       );
-//       const newItem = { id, content };
-//       if (currentUserIndex > -1) {
-//         const currentTodos = todoCopy[currentUserIndex].items;
-//         todoCopy.splice(currentUserIndex, 1, {
-//           userId,
-//           id,
-//           items: [...currentTodos, newItem],
-//         });
-//       } else {
-//         todoCopy.push({ userId, id, items: [newItem] });
-//       }
 
-//       return {
-//         ...state,
-//         todoItems: todoCopy,
-//       };
-//     }
-//     case REMOVE_TODO: {
-//       const id = action.payload;
-//       const todoCopy = [...state.todoItems];
-
-//       return {
-//         ...state,
-//         todoItems: todoCopy.filter((todoItem) => todoItem.id !== id),
-//       };
-//     }
-//     case EDIT_TODO: {
-//       const { content, id } = action.payload;
-//       const todoCopy = [...state.todoItems];
-//       const oldItemIndex = todoCopy.findIndex((todoItem) => todoItem.id === id);
-//       const updatedItem = { id, content };
-//       todoCopy.splice(oldItemIndex, 1, updatedItem);
-//       return {
-//         ...state,
-//         todoItems: todoCopy,
-//       };
-//     }
-//     case GET_TODOS: {
-//       const userId = action.payload
-//       const currentUser = state.todoItems.find(item => item.userId === userId)
-//       if(!currentUser){
-//         return []
-//       }
-//       return currentUser.items
-//     }
-//     default: {
-//       return state;
-//     }
-//   }
-// }
-function todosById(state = {}, action){
-  switch(action.type){
+function todosById(state = {}, action) {
+  switch (action.type) {
     //user actions
     case REMOVE_USER: {
-      const {todos} = action.payload
-      
-      return modify(REMOVE, Object, state, todos)
+      const { todos } = action.payload;
+      return modify(REMOVE, Object, state, todos);
     }
 
     //todo actions
     case ADD_TODO: {
-      const {userId, id, content} = action.payload
+      const { userId, id, content } = action.payload;
       return {
         ...state,
         [id]: {
           userId,
-          content
-        }
-      }
+          content,
+        },
+      };
+    }
+    case REMOVE_TODO: {
+      const { todoId } = action.payload;
+      return modify(REMOVE, Object, state, [todoId]);
+    }
+    case EDIT_TODO: {
+      const { todoId, content } = action.payload;
+      const currentTodoState = state[todoId];
+      return {
+        ...state,
+        [todoId]: {
+          ...currentTodoState,
+          content,
+        },
+      };
     }
     default:
-      return state
+      return state;
   }
 }
 
-function allTodos(state=[], action){
-  switch(action.type){
+function allTodos(state = [], action) {
+  switch (action.type) {
     //user actions
     case REMOVE_USER: {
-      const {todos} = action.payload
-      const result = modify(REMOVE, Array, state, todos)
-      return result 
+      const { todos } = action.payload;
+      const result = modify(REMOVE, Array, state, todos);
+      return result;
     }
 
     //todo actions
     case ADD_TODO: {
-      const {id} = action.payload
-      return [...state, id]
+      const { id } = action.payload;
+      return [...state, id];
+    }
+    case REMOVE_TODO: {
+      const { todoId } = action.payload;
+      return modify(REMOVE, Array, state, [todoId]);
     }
     default:
-      return state
+      return state;
   }
 }
 const todoReducer = combineReducers({
   byId: todosById,
-  allIds: allTodos
-})
+  allIds: allTodos,
+});
 
-export default todoReducer
+export default todoReducer;

@@ -3,36 +3,40 @@ import { useDispatch } from "react-redux";
 import { removeTodo, editTodo } from "../../store/actions/todoActions";
 import cls from "./TodoItem.module.css";
 const TodoItem = (props) => {
-  const { content, id } = props;
+  const { todo } = props;
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
   const editInputRef = useRef();
   const removeTodoItem = () => {
-    dispatch(removeTodo(id));
+    dispatch(removeTodo(todo.userId, todo.todoId));
   };
   const editTodoItem = (ev) => {
     ev.preventDefault();
     const newContent = editInputRef.current.value;
     if (newContent.length > 0) {
-      dispatch(editTodo(id, newContent));
+      dispatch(editTodo(todo.todoId, newContent));
     }
     setEditMode(false);
   };
   return (
     <li className={cls.todoItem}>
       <div>
-        {!editMode && <span>{content}</span>}
+        {!editMode && <span>{todo.content}</span>}
         {editMode && (
           <span>
             <form onSubmit={editTodoItem}>
-              <input ref={editInputRef} type="text" defaultValue={content} />
+              <input
+                ref={editInputRef}
+                type="text"
+                defaultValue={todo.content}
+              />
               <button type="submit">Submit</button>
             </form>
           </span>
         )}
       </div>
       <div>
-        <span>{`id: ${id}`}</span>
+        <span>{`id: ${todo.todoId}`}</span>
         <span className={cls.actionButtons}>
           <button onClick={() => setEditMode(true)}>Edit</button>
           <button onClick={removeTodoItem}>Remove</button>

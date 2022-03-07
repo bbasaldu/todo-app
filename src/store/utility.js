@@ -1,7 +1,8 @@
 //general utility action types
 export const REMOVE = "REMOVE";
-//helper function
-export const modify = (actionType, dataType, state, ids) => {
+export const EDIT = "EDIT"
+//helper function for general operations on normalized data
+export const modify = (actionType, dataType=null, state, ids, fieldName="", newData=null) => {
   switch (actionType) {
     case REMOVE: {
       if (dataType === Object) {
@@ -15,6 +16,13 @@ export const modify = (actionType, dataType, state, ids) => {
         return [...state].filter((stateId) => !ids.includes(stateId));
       }
       return state;
+    }
+    case EDIT: {
+      const objectCopy = {...state}
+      ids.forEach(id => {
+        objectCopy[id][fieldName] = newData
+      })
+      return objectCopy
     }
     default:
       return state;

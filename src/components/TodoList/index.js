@@ -7,9 +7,7 @@ const TodoList = () => {
   return (
     <ul className={cls.todoList}>
       {todos.map((todo) => {
-        return (
-          <TodoItem key={todo.todoId} id={todo.todoId} content={todo.content} />
-        );
+        return <TodoItem key={todo.todoId} todo={todo} />;
       })}
     </ul>
   );

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import {addUser} from '../../store/actions/userActions'
+import { addUser } from "../../store/actions/userActions";
 const UserInput = () => {
   const inputRef = useRef();
   const dispatch = useDispatch();

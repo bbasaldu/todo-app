@@ -1,5 +1,6 @@
 import { applyMiddleware, createStore } from '@reduxjs/toolkit'
 import rootReducer from './reducers'
+//dev middleware for logging
 const logger = store => next => action => {
     console.log('dispatching', action)
     let result = next(action)
@@ -43,6 +44,7 @@ todos: {
 
 
 /*
+not normalized
 data: {
     users: [
         {username: 'user1', id: 1, todos: [
