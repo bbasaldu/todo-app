@@ -1,4 +1,5 @@
 import {
+  SET_HAS_FETCHED,
   SET_CURR_USER,
   ADD_USER,
   REMOVE_USER,
@@ -12,7 +13,7 @@ function usersById(state = {}, action) {
   switch (action.type) {
     //user actions
     case ADD_USER: {
-      const { userId, name, } = action.payload;
+      const { userId, name } = action.payload;
       return {
         ...state,
         [userId]: {
@@ -88,7 +89,17 @@ function currentUser(state = null, action) {
       return state;
   }
 }
+function hasFetched(state = false, action) {
+  switch (action.type) {
+    case SET_HAS_FETCHED: {
+      return action.payload;
+    }
+    default:
+      return state;
+  }
+}
 const userReducer = combineReducers({
+  hasFetched,
   currentUser,
   byId: usersById,
   allIds: allUsers,

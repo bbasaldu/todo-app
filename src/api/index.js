@@ -19,7 +19,7 @@ const fakeDB = {
     },
   ],
 };
-const DELAY_TIME = 250;
+const DELAY_TIME = 2000;
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 //fake user api requests
 export const getUsers = () => delay(DELAY_TIME).then(() => fakeDB.users);
