@@ -7,7 +7,6 @@ import {
 } from "../actionTypes/userActionTypes";
 import { addTodo } from "../actions/todoActions";
 import { addUserToDB } from "../../api";
-let nextUserId = 0;
 
 export const setCurrentUser = (userId) => ({
   type: SET_CURR_USER,
