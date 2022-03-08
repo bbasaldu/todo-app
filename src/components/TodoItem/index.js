@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { removeTodo, editTodo } from "../../store/actions/todoActions";
+import { deleteTodo, updateTodo } from "../../store/actions/todoActions";
 import cls from "./TodoItem.module.css";
 const TodoItem = (props) => {
   const { todo } = props;
@@ -8,13 +8,13 @@ const TodoItem = (props) => {
   const [editMode, setEditMode] = useState(false);
   const editInputRef = useRef();
   const removeTodoItem = () => {
-    dispatch(removeTodo(todo.userId, todo.todoId));
+    dispatch(deleteTodo(todo.userId, todo.todoId));
   };
   const editTodoItem = (ev) => {
     ev.preventDefault();
     const newContent = editInputRef.current.value;
     if (newContent.length > 0) {
-      dispatch(editTodo(todo.todoId, newContent));
+      dispatch(updateTodo(todo.userId, todo.todoId, newContent));
     }
     setEditMode(false);
   };

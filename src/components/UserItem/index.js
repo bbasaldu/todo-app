@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeUser, editUser } from "../../store/actions/userActions";
+import { deleteUser, updateUser } from "../../store/actions/userActions";
 import { selectCurrentUser } from "../../store/selectors";
 import cls from "./UserItem.module.css";
 const UserItem = () => {
@@ -9,13 +9,13 @@ const UserItem = () => {
   const [editMode, setEditMode] = useState(false);
   const editInputRef = useRef();
   const removeUserItem = () => {
-    dispatch(removeUser({ ...currentUser }));
+    dispatch(deleteUser({ ...currentUser }));
   };
   const editCurrentUser = (ev) => {
     ev.preventDefault();
     const newContent = editInputRef.current.value;
     if (newContent.length > 0) {
-      dispatch(editUser(currentUser.userId, newContent));
+      dispatch(updateUser(currentUser.userId, newContent));
     }
     setEditMode(false);
   };

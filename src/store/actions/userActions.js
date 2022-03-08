@@ -1,4 +1,4 @@
-import { getUsers } from "../../api";
+import { editUserFromDB, getUsers, removeUserFromDB } from "../../api";
 import {
   SET_CURR_USER,
   ADD_USER,
@@ -6,7 +6,7 @@ import {
   EDIT_USER,
 } from "../actionTypes/userActionTypes";
 import { addTodo } from "../actions/todoActions";
-import {addUserToDB} from '../../api'
+import { addUserToDB } from "../../api";
 let nextUserId = 0;
 
 export const setCurrentUser = (userId) => ({
@@ -18,7 +18,7 @@ export const addUser = (name, userId) => ({
   type: ADD_USER,
   payload: {
     name,
-    userId
+    userId,
   },
 });
 
@@ -50,9 +50,19 @@ export const fetchData = () => async (dispatch) => {
 };
 
 export const postUser = (name) => async (dispatch) => {
-  const newUser = await addUserToDB(name)
-  dispatch(addUser(newUser.name, newUser.id))
-  newUser.todos.forEach(todo => {
-    dispatch(addTodo(newUser.id, todo.id, todo.content))
-  })
+  const newUser = await addUserToDB(name);
+  dispatch(addUser(newUser.name, newUser.id));
+  newUser.todos.forEach((todo) => {
+    dispatch(addTodo(newUser.id, todo.id, todo.content));
+  });
+};
+
+export const deleteUser = (currUser) => async (dispatch) => {
+  const deletedUser = await removeUserFromDB(currUser.userId);
+  dispatch(removeUser(deletedUser))
+};
+
+export const updateUser = (userId, name) => async (dispatch) => {
+  const updatedUser = await editUserFromDB(userId, name)
+  dispatch(editUser(updatedUser.userId, updatedUser.name))
 }
