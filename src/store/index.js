@@ -1,5 +1,6 @@
 import { applyMiddleware, createStore } from '@reduxjs/toolkit'
 import rootReducer from './reducers'
+import ThunkMiddleware from 'redux-thunk'
 //dev middleware for logging
 const logger = store => next => action => {
     console.log('dispatching', action)
@@ -7,7 +8,8 @@ const logger = store => next => action => {
     console.log('next state', store.getState())
     return result
   }
-export default createStore(rootReducer, applyMiddleware(logger))
+
+export default createStore(rootReducer, applyMiddleware(ThunkMiddleware,logger,))
 /*
 flux pattern with
 normalized data schema

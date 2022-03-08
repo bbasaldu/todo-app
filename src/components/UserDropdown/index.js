@@ -7,8 +7,8 @@ const UserDropDown = () => {
   const dropDownRef = useRef();
   const dispatch = useDispatch();
   const handleUserChange = () => {
-    const id = +dropDownRef.current.value;
-    dispatch(setCurrentUser(id > -1 ? id : null));
+    const id = dropDownRef.current.value;
+    dispatch(setCurrentUser(id !== '-1' ? id : null));
   };
   return (
     <select ref={dropDownRef} defaultValue={"-1"} onChange={handleUserChange}>

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../store/actions/userActions";
+import { postUser } from "../../store/actions/userActions";
 const UserInput = () => {
   const inputRef = useRef();
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ const UserInput = () => {
     ev.preventDefault();
     const userInput = inputRef.current.value;
     if (userInput.length > 0) {
-      dispatch(addUser(userInput));
+      dispatch(postUser(userInput));
       inputRef.current.value = "";
     }
   };

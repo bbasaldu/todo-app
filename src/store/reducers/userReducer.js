@@ -12,7 +12,7 @@ function usersById(state = {}, action) {
   switch (action.type) {
     //user actions
     case ADD_USER: {
-      const { userId, name } = action.payload;
+      const { userId, name, } = action.payload;
       return {
         ...state,
         [userId]: {
