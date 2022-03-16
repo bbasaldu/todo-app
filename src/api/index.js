@@ -22,12 +22,12 @@ const fakeDB = {
 const DELAY_TIME = 2000;
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 //fake user api requests
-export const getUsers = () => delay(DELAY_TIME).then(() => fakeDB.users);
+export const getUsers = () => delay(DELAY_TIME).then(() => ({users: fakeDB.users}));
 export const addUserToDB = (name) =>
   delay(DELAY_TIME).then(() => {
     const newUser = { name, id: v4(), todos: [] };
     fakeDB.users.push(newUser);
-    return newUser;
+    return {users: [newUser]};
   });
 export const removeUserFromDB = (userId) =>
   delay(DELAY_TIME).then(() => {
@@ -50,11 +50,11 @@ export const editUserFromDB = (userId, name) =>
 //fake todo api requests
 export const addTodoToDB = (userId, content) =>
   delay(DELAY_TIME).then(() => {
-    const newTodo = { userId, id: v4(), content };
+    const newTodo = { id: v4(), content };
     const currUser = fakeDB.users.find((user) => user.id === userId);
     currUser.todos.push(newTodo);
-    return newTodo;
-  });
+    return {users: [currUser]};
+});
 export const removeTodoFromDB = (userId, todoId) =>
   delay(DELAY_TIME).then(() => {
     const currUser = fakeDB.users.find((user) => user.id === userId);

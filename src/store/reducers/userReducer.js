@@ -13,13 +13,10 @@ function usersById(state = {}, action) {
   switch (action.type) {
     //user actions
     case ADD_USER: {
-      const { userId, name } = action.payload;
+      const newState = action.payload;
       return {
         ...state,
-        [userId]: {
-          name,
-          todos: [],
-        },
+        ...newState.entities.users
       };
     }
     case REMOVE_USER: {
@@ -34,17 +31,8 @@ function usersById(state = {}, action) {
     }
 
     //todo actions
-    case ADD_TODO: {
-      const { userId, id } = action.payload;
-      const currentUserState = state[userId];
-      return {
-        ...state,
-        [userId]: {
-          ...currentUserState,
-          todos: [...currentUserState.todos, id],
-        },
-      };
-    }
+    
+
     case REMOVE_TODO: {
       const { userId, todoId } = action.payload;
       const currentUserState = state[userId];
@@ -64,8 +52,8 @@ function usersById(state = {}, action) {
 function allUsers(state = [], action) {
   switch (action.type) {
     case ADD_USER: {
-      const { userId } = action.payload;
-      return [...state, userId];
+      const newState = action.payload;
+      return [...state, ...newState.result];
     }
     case REMOVE_USER: {
       const { userId } = action.payload;

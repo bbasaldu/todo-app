@@ -36,7 +36,7 @@ const TodoItem = (props) => {
         )}
       </div>
       <div>
-        <span>{`id: ${todo.todoId}`}</span>
+        <span>{`id: ${todo.id}`}</span>
         <span className={cls.actionButtons}>
           <button onClick={() => setEditMode(true)}>Edit</button>
           <button onClick={removeTodoItem}>Remove</button>

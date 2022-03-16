@@ -9,6 +9,8 @@ import { modify, REMOVE } from "../utility";
 
 function todosById(state = {}, action) {
   switch (action.type) {
+    
+
     //user actions
     case REMOVE_USER: {
       const { todos } = action.payload;
@@ -17,13 +19,10 @@ function todosById(state = {}, action) {
 
     //todo actions
     case ADD_TODO: {
-      const { userId, id, content } = action.payload;
+      const newState = action.payload;
       return {
         ...state,
-        [id]: {
-          userId,
-          content,
-        },
+        ...newState.entities.todos
       };
     }
     case REMOVE_TODO: {
@@ -57,8 +56,8 @@ function allTodos(state = [], action) {
 
     //todo actions
     case ADD_TODO: {
-      const { id } = action.payload;
-      return [...state, id];
+      const newState = action.payload;
+      return [...state, Object.keys(newState.entities.todos)];
     }
     case REMOVE_TODO: {
       const { todoId } = action.payload;

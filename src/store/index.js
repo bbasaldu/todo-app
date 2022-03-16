@@ -1,15 +1,19 @@
-import { applyMiddleware, createStore } from '@reduxjs/toolkit'
-import rootReducer from './reducers'
-import ThunkMiddleware from 'redux-thunk'
+import { applyMiddleware, compose, createStore } from "@reduxjs/toolkit";
+import rootReducer from "./reducers";
+import ThunkMiddleware from "redux-thunk";
 //dev middleware for logging
-const logger = store => next => action => {
-    console.log('dispatching', action)
-    let result = next(action)
-    console.log('next state', store.getState())
-    return result
-  }
-
-export default createStore(rootReducer, applyMiddleware(ThunkMiddleware,logger,))
+const logger = (store) => (next) => (action) => {
+  console.log("dispatching", action);
+  let result = next(action);
+  console.log("next state", store.getState());
+  return result;
+};
+//for redux dev tools chrome extension
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export default createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(ThunkMiddleware, logger))
+);
 /*
 flux pattern with
 normalized data schema
@@ -43,7 +47,6 @@ todos: {
     allIds: [t1,t2,...,t6]
 }
 */
-
 
 /*
 not normalized

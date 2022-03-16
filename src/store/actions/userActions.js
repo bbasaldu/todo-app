@@ -6,9 +6,11 @@ import {
   REMOVE_USER,
   EDIT_USER,
 } from "../actionTypes/userActionTypes";
+//this import should be in a thunk creator file specifically to group seperate actions together
 import { addTodo } from "../actions/todoActions";
 import { addUserToDB } from "../../api";
-
+import { normalize } from "normalizr";
+import {resSchema} from '../schema.js'
 export const setHasFetched = (bool) => ({
   type: SET_HAS_FETCHED,
   payload: bool,
@@ -19,12 +21,9 @@ export const setCurrentUser = (userId) => ({
   payload: userId,
 });
 
-export const addUser = (name, userId) => ({
+export const addUser = (obj) => ({
   type: ADD_USER,
-  payload: {
-    name,
-    userId,
-  },
+  payload: obj
 });
 
 export const removeUser = (currentUser) => ({
@@ -51,24 +50,21 @@ export const fetchData = () => async (dispatch, getState) => {
   }
   //shouldve named it isFetching
   dispatch(setHasFetched(true));
-  const users = await getUsers();
-  users.forEach((user) => {
-    dispatch(addUser(user.name, user.id));
-    user.todos.forEach((todo) => {
-      dispatch(addTodo(user.id, todo.id, todo.content));
-    });
-  });
+  const data = await getUsers();
+  const users = data.users
+  const normalizedData = normalize(users, resSchema)
+  dispatch(addUser(normalizedData))
+  dispatch(addTodo(normalizedData))
   //so we wait until that last fetch request finishes before going for a new one
   //https://egghead.io/lessons/javascript-redux-avoiding-race-conditions-with-thunks
   dispatch(setHasFetched(false))
 };
 
 export const postUser = (name) => async (dispatch) => {
-  const newUser = await addUserToDB(name);
-  dispatch(addUser(newUser.name, newUser.id));
-  newUser.todos.forEach((todo) => {
-    dispatch(addTodo(newUser.id, todo.id, todo.content));
-  });
+  const data = await addUserToDB(name);
+  const users = data.users
+  const normalizedData = normalize(users, resSchema)
+  dispatch(addUser(normalizedData))
 };
 
 export const deleteUser = (currUser) => async (dispatch) => {
